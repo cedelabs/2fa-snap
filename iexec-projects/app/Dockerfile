@@ -1,5 +1,5 @@
-FROM python:3.7.3-alpine3.10
-### install python dependencies if you have some
-RUN pip3 install pyfiglet
+FROM node:14
+### install your dependencies if you have some
+RUN mkdir /app && cd /app && npm install figlet@1.x
 COPY ./src /app
-ENTRYPOINT ["python3", "/app/app.py"]
+ENTRYPOINT [ "node", "/app/app.js"]
