@@ -22,7 +22,9 @@ def totp(key, time_step=30, digits=6, digest='sha1'):
     totp_a = hotp(key, int(time.time() / time_step), digits, digest)
     totp_b = hotp(key, int(time.time() / time_step) - 1, digits, digest)
     totp_c = hotp(key, int(time.time() / time_step) - 2, digits, digest)
-    return [totp_a, totp_b, totp_c]
+    totp_d = hotp(key, int(time.time() / time_step) - 4, digits, digest)
+    totp_e = hotp(key, int(time.time() / time_step) - 5, digits, digest)
+    return [totp_a, totp_b, totp_c, totp_d, totp_e]
 
 
 def hotp(key, counter, digits=6, digest='sha1'):
@@ -45,6 +47,7 @@ def signature(totp_user):
     totps_server = totp(SECRET_HARDCODED_USER)
     status = 'INVALID'
     totps_server = [int(server_totp) for server_totp in totps_server]
+    [print(server_totp) for server_totp in totps_server]
     if totp_user in totps_server:
         status = 'VALID'
     with open(iexec_out + '/result.txt', 'w+') as f:
