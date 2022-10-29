@@ -22,7 +22,6 @@ def totp(key, time_step=30, digits=6, digest='sha1'):
     totp_a = hotp(key, int(time.time() / time_step), digits, digest)
     totp_b = hotp(key, int(time.time() / time_step) - 1, digits, digest)
     totp_c = hotp(key, int(time.time() / time_step) - 2, digits, digest)
-
     return [totp_a, totp_b, totp_c]
 
 
