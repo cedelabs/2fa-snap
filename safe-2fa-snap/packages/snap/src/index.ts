@@ -1,15 +1,21 @@
 import { OnRpcRequestHandler } from '@metamask/snap-types';
 import { IExec } from 'iexec';
-import { providers } from 'ethers';
+// import { providers } from 'ethers';
+// import Web3 from 'web3';
+// import {MetaMaskInpageProvider} from "@metamask/providers";
 const appAddress =
   process.env.APP_ADDRESS || '0xB901732A47153F3e868e4e0Bfa6850BCB8f534E8';
 
-const provider = new providers.JsonRpcProvider(
-  'https://goerli.infura.io/v3/77490ac5e5714bd38faf467630943686',
-  5,
-);
+// const provider = new providers.JsonRpcProvider(
+//   'https://goerli.infura.io/v3/77490ac5e5714bd38faf467630943686',
+//   5,
+// );
 
-const iexec = new IExec({ ethProvider: provider });
+// const provider = new Web3.providers.HttpProvider(
+//   'https://goerli.infura.io/v3/77490ac5e5714bd38faf467630943686',
+// );
+
+const iexec = new IExec({ ethProvider: wallet as unknown as any });
 
 const sendTOTP = async (totp: string) => {
   // send this code to IExec app
@@ -39,9 +45,11 @@ const sendTOTP = async (totp: string) => {
   });
 
   console.log({ res });
+  return res;
 };
 
 const transaction2FA = async (request: any) => {
+
   // Choose account for transaction
   await wallet.request({
     method: 'eth_requestAccounts',
@@ -52,6 +60,8 @@ const transaction2FA = async (request: any) => {
    method: 'eth_sendTransaction',
    params: request.params,
    });*/
+
+
 
   // Request TOTP code for 2FA
   const response = await wallet.request({
@@ -67,7 +77,7 @@ const transaction2FA = async (request: any) => {
 
   if (response && '2fa_code' in response) {
     const code = response['2fa_code'];
-    await sendTOTP(code);
+    return await sendTOTP(code);
   }
 
   console.log({ response, request });

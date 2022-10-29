@@ -5,7 +5,7 @@
   "license": "(MIT-0 OR Apache-2.0)",
   "scripts": {
     "build": "cross-env GATSBY_TELEMETRY_DISABLED=1 gatsby build",
-    "clean": "rimraf build",
+    "clean": "gatsby clean && rimraf build",
     "lint": "yarn lint:eslint && yarn lint:misc --check",
     "lint:eslint": "eslint . --cache --ext js,ts",
     "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",
@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@metamask/providers": "^9.0.0",
+    "buffer": "^6.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",

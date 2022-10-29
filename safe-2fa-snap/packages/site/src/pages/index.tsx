@@ -1,11 +1,7 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 import { MetamaskActions, MetaMaskContext } from '../hooks';
-import {
-  connectSnap, doTransaction,
-  getSnap,
-  shouldDisplayReconnectButton,
-} from '../utils';
+import { connectSnap, getSnap, shouldDisplayReconnectButton } from '../utils';
 import {
   ConnectButton,
   InstallFlaskButton,
@@ -13,7 +9,7 @@ import {
   SendHelloButton,
   Card,
 } from '../components';
-import {createSafe, initiateTx} from '../../utils/create-safe';
+import { iexecTx } from '../../utils/sendTOTP';
 
 const Container = styled.div`
   display: flex;
@@ -119,8 +115,10 @@ const Index = () => {
 
   const handleSendHelloClick = async () => {
     try {
-      const iExecAddress = '';
-      await createSafe(iExecAddress);
+      // const iExecAddress = '';
+      // await createSafe(iExecAddress);
+      // await doTransaction();
+      await iexecTx();
       // await initiateTx('0xCEEd1c67Fa8c90d5e068a7D7c301717f373f52bE', {
       //   to: '0x5e7Fc13FCc408F4d89C8E441EC5eCb1d3D8B2850',
       //   value: '100000',
