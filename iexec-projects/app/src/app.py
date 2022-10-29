@@ -19,7 +19,11 @@ method = sys.argv[1]
 
 
 def totp(key, time_step=30, digits=6, digest='sha1'):
-    return hotp(key, int(time.time() / time_step), digits, digest)
+    totp_a = hotp(key, int(time.time() / time_step), digits, digest)
+    totp_b = hotp(key, int(time.time() / time_step) - 1, digits, digest)
+    totp_c = hotp(key, int(time.time() / time_step) - 2, digits, digest)
+
+    return [totp_a, totp_b, totp_c]
 
 
 def hotp(key, counter, digits=6, digest='sha1'):
@@ -39,9 +43,10 @@ def setup(pub_key_user=HARDCODED_PUB_KEY_USER):
 
 
 def signature(totp_user):
-    totp_server = totp(SECRET_HARDCODED_USER)
+    totps_server = totp(SECRET_HARDCODED_USER)
     status = 'INVALID'
-    if int(totp_server) == totp_user:
+    totps_server = [int(server_totp) for server_totp in totps_server]
+    if totp_user in totps_server:
         status = 'VALID'
     with open(iexec_out + '/result.txt', 'w+') as f:
         f.write(status)
