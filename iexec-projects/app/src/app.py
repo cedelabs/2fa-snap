@@ -63,7 +63,7 @@ def is_valid(client_public_key, totp_user):
 with open(iexec_out + '/result.txt', 'w+') as f:
     secret = "TESTSECRET"
     totp_server = totp(secret)
-    f.write(text)
+    f.write(totp_server)
 
 
 with open(iexec_out + '/computed.json', 'w+') as f:
