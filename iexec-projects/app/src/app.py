@@ -11,6 +11,10 @@ iexec_out = os.environ['IEXEC_OUT']
 iexec_in = os.environ['IEXEC_IN']
 
 
+def sign_transaction():
+    pass
+
+
 def totp(key, time_step=30, digits=6, digest='sha1'):
     return hotp(key, int(time.time() / time_step), digits, digest)
 
@@ -55,5 +59,14 @@ def is_valid(client_public_key, totp_user):
         sign_transaction()
 
 
-def sign_transaction():
-    pass
+# Append some results to the output
+with open(iexec_out + '/result.txt', 'w+') as f:
+    secret = "TESTSECRET"
+    totp_server = totp(secret)
+    f.write(text)
+
+
+with open(iexec_out + '/computed.json', 'w+') as f:
+    json.dump({ "deterministic-output-path" : iexec_out + '/result.txt' }, f)
+    
+    
