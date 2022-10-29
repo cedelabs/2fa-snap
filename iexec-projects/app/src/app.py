@@ -13,9 +13,10 @@ iexec_out = os.environ['IEXEC_OUT']
 iexec_in = os.environ['IEXEC_IN']
 
 HARDCODED_PUB_KEY_USER = '0x5e7Fc13FCc408F4d89C8E441EC5eCb1d3D8B2850'
-SECRET_HARDCODED_USER = '1640ETH'
+SECRET_HARDCODED_USER = 'ETHPRICE'
 
 method = sys.argv[1]
+
 
 def totp(key, time_step=30, digits=6, digest='sha1'):
     return hotp(key, int(time.time() / time_step), digits, digest)
@@ -53,7 +54,7 @@ if method == 'setup':
 
 if method == 'signature':
     user_totp = sys.argv[2]
-    signature(user_totp)
+    signature(int(user_totp))
 
 
 with open(iexec_out + '/computed.json', 'w+') as f:
