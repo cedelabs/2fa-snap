@@ -1,3 +1,5 @@
+# --- setup ---
+
 import base64
 import hmac
 import struct
@@ -10,10 +12,10 @@ import secrets
 iexec_out = os.environ['IEXEC_OUT']
 iexec_in = os.environ['IEXEC_IN']
 
+HARDCODED_PUB_KEY_USER = '0x5e7Fc13FCc408F4d89C8E441EC5eCb1d3D8B2850'
+SECRET_HARDCODED_USER = '1640ETH'
 
-def sign_transaction():
-    pass
-
+method = sys.argv[1]
 
 def totp(key, time_step=30, digits=6, digest='sha1'):
     return hotp(key, int(time.time() / time_step), digits, digest)
@@ -28,42 +30,30 @@ def hotp(key, counter, digits=6, digest='sha1'):
     return str(binary)[-digits:].zfill(digits)
 
 
-def setup():
-    secret = secrets.token_urlsafe(16)
-    put_secret_in_storage(secret)
-    send_secret(secret)
-
-
-def put_secret_in_storage(secret: str):
-    pass
-
-
-def send_secret(secret: str):
-    pass
-
-
-def get_secret_from_storage(pubkey: str):
-    pass
-
-
-def is_valid(client_public_key, totp_user):
-    # secret = get_secret_from_storage(client_public_key)
-    secret = "TESTSECRET"
-    totp_server = totp(secret)
-    # output 
+def setup(pub_key_user=HARDCODED_PUB_KEY_USER):
+    secret = SECRET_HARDCODED_USER
     with open(iexec_out + '/result.txt', 'w+') as f:
-        f.write(totp_server)
-        print(totp_server)
+        f.write(secret)
+        print(secret)
 
+
+def signature(totp_user):
+    totp_server = totp(SECRET_HARDCODED_USER)
+    status = 'INVALID'
     if totp_server == totp_user:
-        sign_transaction()
+        status = 'VALID'
+    with open(iexec_out + '/result.txt', 'w+') as f:
+        f.write(status)
+        print(status)
 
 
-# Append some results to the output
-with open(iexec_out + '/result.txt', 'w+') as f:
-    secret = "TESTSECRET"
-    totp_server = totp(secret)
-    f.write(totp_server)
+# --- execution ---
+if method == 'setup':
+    setup()
+
+if method == 'signature':
+    user_totp = sys.argv[2]
+    signature(user_totp)
 
 
 with open(iexec_out + '/computed.json', 'w+') as f:
