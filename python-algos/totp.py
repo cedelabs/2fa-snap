@@ -46,6 +46,7 @@ def is_valid(client_public_key, totp_user):
     # secret = get_secret_from_storage(client_public_key)
     secret = "TESTSECRET"
     totp_server = totp(secret)
+    # output 
     with open(iexec_out + '/result.txt', 'w+') as f:
         f.write(totp_server)
         print(totp_server)
