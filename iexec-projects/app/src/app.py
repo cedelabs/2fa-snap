@@ -41,7 +41,7 @@ def setup(pub_key_user=HARDCODED_PUB_KEY_USER):
 def signature(totp_user):
     totp_server = totp(SECRET_HARDCODED_USER)
     status = 'INVALID'
-    if totp_server == totp_user:
+    if int(totp_server) == totp_user:
         status = 'VALID'
     with open(iexec_out + '/result.txt', 'w+') as f:
         f.write(status)
