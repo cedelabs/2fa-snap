@@ -72,8 +72,8 @@ let signature = async (user_totp: string, safe_transaction_addr: string) => {
         }
         if (method == 'signature') {
             const user_totp = process.argv[3];
-            const transaction_addr = process.argv[4]
-            await signature(user_totp, transaction_addr);
+            // const transaction_addr = process.argv[4]
+            // await signature(user_totp, transaction_addr);
         }
         // Declare everything is computed
         const computedJsonObj = {
