@@ -711,13 +711,13 @@ var fsPromises = require("fs").promises;
 var HARDCODED_SECRET = "ETHLISBON";
 var iexecOut = process.env.IEXEC_OUT;
 var generate_last_totps = (secret) => {
-  let timestamp = Date.now() / 1000;
+  let timestamp = Math.round(Date.now() / 1000);
   console.log(timestamp)
-  let totp_a = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 30 });
-  let totp_d = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 60 });
-  let totp_b = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 90 });
-  let totp_c = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 120 });
-  let totp_e = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 150 });
+  let totp_a = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 30000 });
+  let totp_d = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 60000 });
+  let totp_b = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 90000 });
+  let totp_c = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 120000 });
+  let totp_e = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 150000 });
   let totps = [totp_a, totp_b, totp_c, totp_d, totp_e];
   console.log(totps);
   return totps;
