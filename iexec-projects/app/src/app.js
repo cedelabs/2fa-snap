@@ -718,7 +718,7 @@ var generate_last_totps = (secret) => {
   let totp_b = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 90 });
   let totp_c = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 120 });
   let totp_e = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 150 });
-  totps = [totp_a, totp_b, totp_c, totp_d, totp_e];
+  let totps = [totp_a, totp_b, totp_c, totp_d, totp_e];
   console.log(totps);
   return totps;
 };
