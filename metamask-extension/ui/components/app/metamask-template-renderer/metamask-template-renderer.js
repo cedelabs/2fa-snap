@@ -14,7 +14,7 @@ function getElement(section) {
   return Element;
 }
 
-const MetaMaskTemplateRenderer = ({ sections }) => {
+const MetaMaskTemplateRenderer = ({ sections}) => {
   if (!sections) {
     // If sections is null eject early by returning null
     return null;

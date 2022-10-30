@@ -7,4 +7,13 @@
   .text {
     font-family: monospace;
   }
+
+  &--text-input {
+    display: block;
+    margin: 0 auto;
+    padding: 5px;
+    border-radius: 5px;
+    border: 2px solid;
+    width: 90%;
+  }
 }

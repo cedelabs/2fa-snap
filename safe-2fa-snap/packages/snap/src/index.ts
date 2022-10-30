@@ -1,46 +1,43 @@
-import {OnRpcRequestHandler} from '@metamask/snap-types';
-import axios from 'axios';
+import { OnRpcRequestHandler } from '@metamask/snap-types';
+import { sendTOTP } from './sendTOTP';
 
-/**
- * Get a message from the origin. For demonstration purposes only.
- *
- * @param originString - The origin string.
- * @returns A message based on the origin.
- */
-export const getMessage = (originString: string): string =>
-  `Hello, ${originString}!`;
+const transaction2FA = async (request: any) => {
+  // Choose account for transaction
+  await wallet.request({
+    method: 'eth_requestAccounts',
+  });
 
-/**
- * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
- *
- * @param args - The request handler args as object.
- * @param args.origin - The origin of the request, e.g., the website that
- * invoked the snap.
- * @param args.request - A validated JSON-RPC request object.
- * @returns `null` if the request succeeded.
- * @throws If the request method is not valid for this snap.
- * @throws If the `snap_confirm` call failed.
- */
-export const onRpcRequest: OnRpcRequestHandler = async ({
-  origin,
-  request,
-}) => {
+  // Sign transaction
+  await wallet.request({
+    method: 'eth_sendTransaction',
+    params: request.params,
+  });
+
+  // Request TOTP code for 2FA
+  const response = await wallet.request({
+    method: 'snap_confirm',
+    params: [
+      {
+        prompt: 'Transaction (2FA protection)',
+        description: '2FA security',
+        textInput: '2fa_code',
+      },
+    ],
+  });
+
+  if (response && '2fa_code' in response) {
+    const code = response['2fa_code'];
+    await sendTOTP(code);
+  }
+
+  console.log({ response, request });
+};
+
+export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
   switch (request.method) {
-    case 'hello':
-      await wallet.request({
-        method: 'snap_confirm',
-        params: [
-          {
-            prompt: getMessage(origin),
-            description: '2FA security',
-            textInput: '2FA code',
-          },
-        ],
-      });
-      //
-      // // eslint-disable-next-line no-case-declarations
-      const response = axios.get('https://google.com');
-      return response;
+    case '2FA_transaction':
+      return transaction2FA(request);
+
     default:
       throw new Error('Method not found.');
   }

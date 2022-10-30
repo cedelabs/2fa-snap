@@ -137,7 +137,7 @@ export const GlobalStyle = createGlobalStyle`
     transition: background-color .1s linear;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1, h3, h4, h5, h6 {
     font-size: ${(props) => props.theme.fontSizes.heading};
     ${(props) => props.theme.mediaQueries.small} {
       font-size: ${(props) => props.theme.fontSizes.mobileHeading};
@@ -172,15 +172,8 @@ export const GlobalStyle = createGlobalStyle`
 
     &:disabled,
     &[disabled] {
-      border: 1px solid ${(props) => props.theme.colors.background.inverse};
       cursor: not-allowed;
-    }
-
-    &:disabled:hover,
-    &[disabled]:hover {
-      background-color: ${(props) => props.theme.colors.background.inverse};
-      color: ${(props) => props.theme.colors.text.inverse};
-      border: 1px solid ${(props) => props.theme.colors.background.inverse};
+      background-color: #5a5a5a7a
     }
   }
 `;

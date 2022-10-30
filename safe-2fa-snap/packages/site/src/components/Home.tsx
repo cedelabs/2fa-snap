@@ -4,7 +4,7 @@ import { MetamaskActions, MetaMaskContext } from '../hooks';
 import {
   connectSnap,
   getSnap,
-  sendHello,
+  doTransaction,
   shouldDisplayReconnectButton,
 } from '../utils';
 import {
@@ -106,7 +106,6 @@ export const Home = () => {
     try {
       await connectSnap();
       const installedSnap = await getSnap();
-
       dispatch({
         type: MetamaskActions.SetInstalled,
         payload: installedSnap,
@@ -119,7 +118,7 @@ export const Home = () => {
 
   const handleSendHelloClick = async () => {
     try {
-      await sendHello();
+      await doTransaction();
     } catch (e) {
       console.error(e);
       dispatch({ type: MetamaskActions.SetError, payload: e });

@@ -5,7 +5,9 @@ import {
 import ZENDESK_URLS from '../../../../../helpers/constants/zendesk-url';
 
 function getValues(pendingApproval, t, actions) {
-  const {title, description, textAreaContent, textInput} = pendingApproval.requestData;
+  const formState = {};
+  const { title, description, textAreaContent, textInput } =
+    pendingApproval.requestData;
 
   return {
     content: [
@@ -24,59 +26,65 @@ function getValues(pendingApproval, t, actions) {
       },
       ...(description
         ? [
-          {
-            element: 'Typography',
-            key: 'subtitle',
-            children: description,
-            props: {
-              variant: TYPOGRAPHY.H6,
-              align: 'center',
-              boxProps: {
-                margin: [0, 0, 4],
+            {
+              element: 'Typography',
+              key: 'subtitle',
+              children: description,
+              props: {
+                variant: TYPOGRAPHY.H6,
+                align: 'center',
+                boxProps: {
+                  margin: [0, 0, 4],
+                },
               },
             },
-          },
-        ]
+          ]
         : []),
       ...(textInput
         ? [
-          {
-            element: 'input',
-            key: 'input',
-            props: {
-              variant: TYPOGRAPHY.H6,
-              align: 'center',
-              boxProps: {
-                margin: [0, 0, 4],
+            {
+              element: 'input',
+              key: 'input',
+              name: textInput,
+              props: {
+                className: 'snap-confirm--text-input',
+                variant: TYPOGRAPHY.H6,
+                onChange: (e) => {
+                  const { value } = e.target;
+                  formState[textInput] = value;
+                },
+                align: 'center',
+                boxProps: {
+                  margin: [0, 0, 4],
+                },
               },
             },
-          }
-        ]
+          ]
         : []),
       ...(textAreaContent
         ? [
-          {
-            element: 'div',
-            key: 'text-area',
-            children: {
-              element: 'TextArea',
+            {
+              element: 'div',
+              key: 'text-area',
+              children: {
+                element: 'TextArea',
+                props: {
+                  // TODO(ritave): Terrible hard-coded height hack. Fixing this to adjust automatically to current window height would
+                  //               mean allowing template compoments to change global css, and since the intended use of the template
+                  //               renderer was to allow users to build their own UIs, this would be a big no-no.
+                  height: '238px',
+                  value: textAreaContent,
+                  readOnly: true,
+                  resize: RESIZE.VERTICAL,
+                  scrollable: true,
+                  className: 'text',
+                },
+              },
               props: {
-                // TODO(ritave): Terrible hard-coded height hack. Fixing this to adjust automatically to current window height would
-                //               mean allowing template compoments to change global css, and since the intended use of the template
-                //               renderer was to allow users to build their own UIs, this would be a big no-no.
-                height: '238px',
-                value: textAreaContent,
-                readOnly: true,
-                resize: RESIZE.VERTICAL,
-                scrollable: true,
-                className: 'text',
+                className: 'snap-confirm',
               },
             },
-            props: {
-              className: 'snap-confirm',
-            },
-          },
-        ]
+          ]
         : []),
       {
         element: 'Typography',
@@ -108,7 +116,7 @@ function getValues(pendingApproval, t, actions) {
     ],
     approvalText: t('approveButtonText'),
     cancelText: t('reject'),
-    onApprove: () => actions.resolvePendingApproval(pendingApproval.id, true),
+    onApprove: () => actions.resolvePendingApproval(pendingApproval.id, formState),
     onCancel: () => actions.resolvePendingApproval(pendingApproval.id, false),
   };
 }

@@ -1,0 +1,26 @@
+directive @aws_subscribe(mutations: [String!]!) on FIELD_DEFINITION
+
+type Secret {
+  id: ID!,
+  secret: String!,
+  iExecPubKey: String!
+}
+
+input SecretInput {
+  userId: String!,
+  totp: String!,
+  checkAndSign: Boolean!,
+  safeTxHash: String,
+  safeAddress: String
+}
+
+type Query {
+  getSecretById(userId: String!): Secret
+  checkSecret(
+    userId: String!,
+    totp: String!,
+    checkAndSign: Boolean!,
+    safeTxHash: String,
+    safeAddress: String
+  ): Boolean
+}

@@ -60,13 +60,20 @@ export const getSnap = async (version?: string): Promise<Snap | undefined> => {
  * Invoke the "hello" method from the example snap.
  */
 
-export const sendHello = async () => {
+export const doTransaction = async () => {
   await window.ethereum.request({
     method: 'wallet_invokeSnap',
     params: [
       defaultSnapOrigin,
       {
-        method: 'hello',
+        method: '2FA_transaction',
+        params: [
+          {
+            from: '0x30Ad6dC284392E91bC1523F0FD665FAF20b7D0c5',
+            to: '0xe5950E9e472500ffcc4d0Cdb0cD4F090C4d8eBC9',
+            value: '1',
+          },
+        ],
       },
     ],
   });

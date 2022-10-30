@@ -225,7 +225,9 @@ export default function ConfirmationPage({
             />
           </Box>
         )}
-        <MetaMaskTemplateRenderer sections={templatedValues.content} />
+        <MetaMaskTemplateRenderer
+          sections={templatedValues.content}
+        />
       </div>
       <ConfirmationFooter
         alerts={
