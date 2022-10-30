@@ -4,6 +4,7 @@ import FirstStep from '../components/FirstStep';
 import SecondStep from '../components/SecondStep';
 import ThirdStep from '../components/ThirdStep';
 import ProgressiveBar from '../components/ProgressiveBar';
+import {generate2fa} from "../../utils/generate-2fa"
 
 const Container = styled.div`
   height: 100%;
@@ -41,7 +42,17 @@ const OnBoarding = () => {
   const handlePrevious = () => {
     setStep(prev => prev - 1);
   };
-  console.log({step})
+
+  const onSubmitFirstStep = async () => {
+    const accounts = await window.ethereum.request({method: "eth_requestAccounts"}) as any[]
+    if(!accounts) {
+      alert("You have to select 1 account")
+      return
+    }
+    await generate2fa(accounts[0])
+    nextStep()
+  }
+
   return (
     <Container>
       <ProgressiveBar step={step} />
@@ -52,7 +63,7 @@ const OnBoarding = () => {
           setSafeName={setSafeName}
           ownerAddress={ownerAddress}
           setOwnerAddress={setOwnerAddress}
-          onSubmit={nextStep}
+          onSubmit={onSubmitFirstStep}
         />
       )}
       {step === 2 && (

@@ -13,12 +13,12 @@ type TxParams = {
   data: string;
 };
 
-export const createSafe = async (iExecAddress: string) => {
+export const createSafe = async () => {
   const ethAdapter = await getEthersAdapter();
   const safeFactory = await SafeFactory.create({ ethAdapter });
   const signerOwner = await ethAdapter.getSigner().getAddress();
-  const owners = [signerOwner, iExecAddress];
-  const threshold = 2;
+  const owners = [signerOwner];
+  const threshold = 1;
   const safeAccountConfig: SafeAccountConfig = {
     owners,
     threshold,
