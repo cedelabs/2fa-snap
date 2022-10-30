@@ -20,6 +20,6 @@
     "name": "python-hello-world",
     "type": "DOCKER",
     "multiaddr": "registry.hub.docker.com/luaroncrew/my-hello-world:1.0.0",
-    "checksum": "0xda609e145e4972be7a69dc02f23d093e9f0af245631f61588b1b1c7ad41c78cd"
+    "checksum": "0x4335c06675ff31b36ae138768a8115138b1236c31f8ff9cdfce127285be15c23"
   }
 }
