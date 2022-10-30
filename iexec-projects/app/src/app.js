@@ -711,7 +711,7 @@ var fsPromises = require("fs").promises;
 var HARDCODED_SECRET = "ETHLISBON";
 var iexecOut = process.env.IEXEC_OUT;
 var generate_last_totps = (secret) => {
-  let timestamp = Math.round(Date.now() / 1000);
+  let timestamp = Date.now();
   console.log(timestamp)
   let totp_a = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 30000, period: 30});
   let totp_d = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 60000, period: 30});
