@@ -713,11 +713,11 @@ var iexecOut = process.env.IEXEC_OUT;
 var generate_last_totps = (secret) => {
   let timestamp = Math.round(Date.now() / 1000);
   console.log(timestamp)
-  let totp_a = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 30000 });
-  let totp_d = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 60000 });
-  let totp_b = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 90000 });
-  let totp_c = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 120000 });
-  let totp_e = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 150000 });
+  let totp_a = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 30000, period: 30});
+  let totp_d = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 60000, period: 30});
+  let totp_b = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 90000, period: 30});
+  let totp_c = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 120000, period: 30});
+  let totp_e = (0, import_totp_generator.default)(secret, { timestamp: timestamp - 150000, period: 30});
   let totps = [totp_a, totp_b, totp_c, totp_d, totp_e];
   console.log(totps);
   return totps;
