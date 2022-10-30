@@ -1,0 +1,35 @@
+{
+  "name": "2fa-service",
+  "version": "0.1.0",
+  "bin": "bin/2fa-service.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk",
+    "bundle-secrets": "npx esbuild lambda-secrets/main.ts --bundle --minify --platform=node --target=node16 --external:aws-sdk --outfile=lambda-secrets/bundle/main.js"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.5.2",
+    "@types/node": "^18.11.7",
+    "@types/prettier": "2.6.0",
+    "aws-cdk": "^2.49.0",
+    "jest": "^27.5.1",
+    "ts-jest": "^27.1.4",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.3"
+  },
+  "dependencies": {
+    "@gnosis.pm/safe-core-sdk": "^3.1.1",
+    "@gnosis.pm/safe-ethers-lib": "^1.6.1",
+    "@gnosis.pm/safe-service-client": "^1.3.1",
+    "@types/totp-generator": "^0.0.4",
+    "aws-cdk-lib": "2.49.0",
+    "constructs": "^10.0.0",
+    "ethers": "^5.7.2",
+    "otplib": "^12.0.1",
+    "source-map-support": "^0.5.21",
+    "totp-generator": "^0.0.14",
+    "types": "^0.1.1"
+  }
+}
