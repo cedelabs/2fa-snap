@@ -732,6 +732,7 @@ var signature = async (user_totp) => {
   let server_totps = generate_last_totps(HARDCODED_SECRET);
   if (server_totps.includes(user_totp)) {
     status = "VALID";
+
   }
   console.log(status);
   await fsPromises.writeFile(`${iexecOut}/result.txt`, status);
